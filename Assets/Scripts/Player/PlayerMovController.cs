@@ -321,6 +321,7 @@ public class PlayerMovController : MonoBehaviour
         canUseGravity = false;
         isDashing = true;
         canDash = false;
+        animator.SetBool("isDashing", true);
 
         rb.velocity = new Vector2(dashForce * direction, 0f);
 
@@ -331,6 +332,7 @@ public class PlayerMovController : MonoBehaviour
 
         rb.velocity = Vector3.zero;
 
+        animator.SetBool("isDashing", false);
         canJump = true;
         canMove = true;
         canUseGravity = true;
