@@ -6076,7 +6076,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   attackRange: 1
   playerDamage: 50
-  maxEnergy: 100
+  maxEnergy: 90
   currentEnergy: 0
   playerStunningDamage: 0
   playerDamageFinal: 70

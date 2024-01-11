@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced9046b934189843a13debb9c43d7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyAmount: 33
+  energyAmount: 30
   playerAttack: {fileID: 0}
   energyPickup: {fileID: 4570881955219675289}
 --- !u!1 &4570881955219675289

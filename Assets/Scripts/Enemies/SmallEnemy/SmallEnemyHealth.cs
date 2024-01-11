@@ -64,7 +64,7 @@ public class SmallEnemyHealth : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ChangeColor(stunnedColor));
+            StartCoroutine(ChangeColor(damageColor));
             audioSource.PlayOneShot(hurtSound);
             SpawnVFX();
         }

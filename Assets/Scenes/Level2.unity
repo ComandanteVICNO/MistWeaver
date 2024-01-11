@@ -4000,7 +4000,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   attackRange: 1
   playerDamage: 50
-  maxEnergy: 100
+  maxEnergy: 90
   currentEnergy: 0
   playerStunningDamage: 0
   playerDamageFinal: 70
@@ -32978,7 +32978,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5800270696097630540, guid: 7482ba2b047c5fe4b8843e21aa65c8a7, type: 3}
 --- !u!4 &1033915699 stripped
@@ -40050,6 +40050,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: -2341854368765297825, guid: 7482ba2b047c5fe4b8843e21aa65c8a7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 629117902d87cbd4fa32bd60f46279fc, type: 2}
     - target: {fileID: -2320590993966853511, guid: 7482ba2b047c5fe4b8843e21aa65c8a7,
         type: 3}
       propertyPath: m_Layer
@@ -46863,6 +46868,7 @@ PrefabInstance:
     - {fileID: -4417174401832634260, guid: 7482ba2b047c5fe4b8843e21aa65c8a7, type: 3}
     - {fileID: -4961548838203490076, guid: 7482ba2b047c5fe4b8843e21aa65c8a7, type: 3}
     - {fileID: 1267545388926111630, guid: 7482ba2b047c5fe4b8843e21aa65c8a7, type: 3}
+    - {fileID: 3742925861546293372, guid: 7482ba2b047c5fe4b8843e21aa65c8a7, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7482ba2b047c5fe4b8843e21aa65c8a7,
         type: 3}
@@ -51934,7 +51940,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4828140081946223198, guid: 7482ba2b047c5fe4b8843e21aa65c8a7, type: 3}
 --- !u!43 &1240595311
