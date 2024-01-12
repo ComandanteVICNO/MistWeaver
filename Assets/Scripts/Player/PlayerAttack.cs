@@ -91,8 +91,8 @@ public class PlayerAttack : MonoBehaviour
         if(UserInput.instance.controls.Player.StunAttack.WasPerformedThisFrame() && movController.isGrounded && canAttack)
         {
             if (!isAttackAllow) return;
-            float energyNeed = maxEnergy / 3;
-            if (currentEnergy <= energyNeed) return;
+            float energyNeed = 30;
+            if (currentEnergy < energyNeed) return;
             else
             {
                 if (stunAttackCoroutine == null && !isAttacking)

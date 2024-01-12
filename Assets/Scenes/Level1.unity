@@ -478,7 +478,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -46.02594, y: -31.297516}
+  m_AnchoredPosition: {x: -46.02588, y: -31.297516}
   m_SizeDelta: {x: 423.4355, y: 298.2457}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &22328289
@@ -6074,7 +6074,7 @@ MonoBehaviour:
   attackPoint: {fileID: 1005061118}
   attackSound: {fileID: 0}
   rb: {fileID: 0}
-  attackRange: 1
+  attackRange: 1.25
   playerDamage: 50
   maxEnergy: 90
   currentEnergy: 0
