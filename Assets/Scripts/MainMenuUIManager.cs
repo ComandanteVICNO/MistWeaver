@@ -15,6 +15,8 @@ public class MainMenuUIManager : MonoBehaviour
     public Slider musicSlider;
     public Slider soundFxSlider;
     public AudioMixer gameAudioMixer;
+    public TMP_Dropdown fullScreenMode; 
+    
 
     [Header("VersionNumber")]
     public GameObject gameVersionUI;
@@ -46,12 +48,39 @@ public class MainMenuUIManager : MonoBehaviour
         GetVolumePlayerPrefs();
         GetPostFxPlayerPrefs();
         GetGameVersion();
-    }
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
+        fullScreenMode.onValueChanged.AddListener(delegate
+        {
+            OnFullScreenModeChanged(fullScreenMode);
+        });
+
+    }
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void OnFullScreenModeChanged(TMP_Dropdown change)
+    {
+        
+        switch (change.value)
+        {
+            case 0:
+                
+                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, FullScreenMode.ExclusiveFullScreen);
+                break;
+            case 1:
+                
+                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, FullScreenMode.Windowed);
+                break;
+            case 2:
+                
+                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, FullScreenMode.FullScreenWindow);
+                break;
+        }
     }
 
     void GetGameVersion()
