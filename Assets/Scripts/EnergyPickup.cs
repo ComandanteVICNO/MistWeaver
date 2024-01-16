@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnergyPickup : MonoBehaviour
 {
     Transform energyPickupTransform;
-    public float energyAmount;
     public PlayerAttack playerAttack;
     public GameObject energyPickup;
     void Start()
@@ -25,7 +24,7 @@ public class EnergyPickup : MonoBehaviour
         else
         {
             playerAttack = other.GetComponent<PlayerAttack>();
-            playerAttack.EnergyPickup(energyAmount);
+            playerAttack.EnergyPickup();
 
             Destroy(energyPickup);
         }

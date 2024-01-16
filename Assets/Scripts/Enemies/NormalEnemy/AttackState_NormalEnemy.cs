@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -11,26 +11,35 @@ public class AttackState_NormalEnemy : LogicMachineBehaviour<NormalEnemyLogicMan
     public bool isAttacking;
     public bool isWaitingCooldown;
 
+
+
+    float attackCooldown;
+    public float currentAttackCooldown;
+
+
     
 
+    float animationCooldown;
+    float currentAnimationCooldown;
 
-    public float currentAttackCooldown;
-    float currentTimeUntilAttackHits;
-    float currentTimeUntilAnimationStops;
+   
     public override void OnAwake()
     {
-        
+
     }
 
     public override void OnEnter()
     {
-        currentTimeUntilAttackHits = manager.timeUntilAttackHits;
-        currentAttackCooldown = manager.animationTime - manager.timeUntilAttackHits;
-        
+
+        attackCooldown = manager.attackAnimation.length + manager.cooldownBonus;
+        animationCooldown = manager.attackAnimation.length;
+        currentAttackCooldown = attackCooldown;
+        currentAnimationCooldown = animationCooldown;
+
         canAttack = true;
         isAttacking = false;
         isWaitingCooldown = false;
-        
+
         logicAnimator.SetBool("canChasePlayer", false);
     }
     public override void OnUpdate()
@@ -41,8 +50,8 @@ public class AttackState_NormalEnemy : LogicMachineBehaviour<NormalEnemyLogicMan
             {
                 logicAnimator.SetBool("canAttackPlayer", false);
             }
-            
-        
+
+
         }
         if (manager.enemyHealth.wasAttacked)
         {
@@ -50,67 +59,65 @@ public class AttackState_NormalEnemy : LogicMachineBehaviour<NormalEnemyLogicMan
         }
 
         StopMovement();
-       
-        
-        if(canAttack)
-        {
-            Attack();
-        }
-        else
-        {
-            AttackCooldown();
 
-        }
-        
-        
+        manager.enemyAttack.DoAttack();
 
     }
 
     public override void OnExit()
     {
-        
+
         logicAnimator.SetBool("canAttackPlayer", false);
         manager.animator.SetBool("isAttacking", false);
     }
 
-    
-    
-    void Attack()
-    {
-        manager.animator.SetBool("isAttacking", true);
-        
-        isAttacking = true;
-        currentTimeUntilAttackHits -= Time.deltaTime;
-        if(currentTimeUntilAttackHits <= 0 && canAttack)
-        {
-            
-            canAttack = false;
-            if (manager.attackHitbox.isPlayerDetected)
-            {
-                manager.playerHealth.TakeDamage(manager.damageValue);
-            }
-        }
-        
-        
 
-    }
 
-    void AttackCooldown()
-    {
-        currentAttackCooldown -= Time.deltaTime;
-        if(currentAttackCooldown <= 0)
-        {
-            currentTimeUntilAttackHits = manager.timeUntilAttackHits;
-            currentAttackCooldown = manager.animationTime - manager.timeUntilAttackHits;
-            isAttacking = false;
-            canAttack = true;
-            
-            manager.animator.SetBool("isAttacking", false);
-        }
-    }
 
- 
+    //void NewAttack()
+    //{
+    //    // If the attack is not on cooldown and the player is detected
+    //    if (canAttack && manager.attackHitbox.isPlayerDetected)
+    //    {
+    //        // Set attacking state
+    //        isAttacking = true;
+    //        canAttack = false;
 
+    //        // Trigger attack animation
+    //        manager.animator.SetBool("isAttacking", true);
+
+    //        // Deal damage to the player
+    //        manager.playerHealth.TakeDamage(manager.damageValue);
+    //    }
+
+    //    // If the attack is on cooldown
+    //    if (!canAttack)
+    //    {
+    //        // Update attack cooldown
+    //        currentAttackCooldown -= Time.deltaTime;
+
+    //        // If the attack cooldown is finished
+    //        if (currentAttackCooldown <= 0)
+    //        {
+    //            // Reset attacking state and allow the next attack
+    //            isAttacking = false;
+    //            canAttack = true;
+    //            currentAttackCooldown = attackCooldown;
+    //        }
+    //    }
+
+    //    // Update animation cooldown
+    //    currentAnimationCooldown -= Time.deltaTime;
+
+    //    // If the animation cooldown is finished
+    //    if (currentAnimationCooldown <= 0)
+    //    {
+    //        manager.animator.SetBool("isAttacking", false);
+
+    //        // Reset animation cooldown
+    //        currentAnimationCooldown = animationCooldown;
+    //    }
+    //}
 
     void StopMovement()
     {

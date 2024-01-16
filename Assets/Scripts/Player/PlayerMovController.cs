@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerMovController : MonoBehaviour
 {
     public static PlayerMovController instance;
 
     public PlayerInput controls;
-    public  Rigidbody rb;
+    public Rigidbody rb;
     private CapsuleCollider playerCapsule;
     private BoxCollider groundBox;
     public PlayerAttack playerAttack;
@@ -57,6 +59,10 @@ public class PlayerMovController : MonoBehaviour
     public RectTransform dashUI;
     public RectTransform dashUIBackground;
 
+    [Header("Collision Layers")]
+    public LayerMask playerLayer;
+    public LayerMask enemyLayer;
+
     [Header("Debug")]
     [SerializeField] public Vector2 direction;
     [SerializeField] private float action;
@@ -66,6 +72,12 @@ public class PlayerMovController : MonoBehaviour
     public float StepSpeed;
     Coroutine footstepsCoroutine;
     public AudioClip[] footstepSounds;
+
+    [Header("VFX")]
+    public ParticleSystem implosion;
+    public ParticleSystem implosion2;
+    public float vfxTimeUntilDie;
+
 
 
 
@@ -87,7 +99,7 @@ public class PlayerMovController : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     private void Update()
@@ -104,7 +116,7 @@ public class PlayerMovController : MonoBehaviour
         //    rb.constraints = RigidbodyConstraints.FreezeAll;
 
         //}
-        if(canMove && canJump)
+        if (canMove && canJump)
         {
             Jump();
         }
@@ -141,54 +153,54 @@ public class PlayerMovController : MonoBehaviour
 
     private void Move()
     {
-        
+
         float moveX = UserInput.instance.moveInput.x;
         if (isGrounded)
         {
-             targetVelocity = moveX * topSpeed;
+            targetVelocity = moveX * topSpeed;
         }
         else
         {
-             targetVelocity = moveX * topSpeed * airSpeedMultiplier;
+            targetVelocity = moveX * topSpeed * airSpeedMultiplier;
         }
 
-            // Calculate the difference between the target velocity and current velocity.
-            float velocityChange = targetVelocity - currentSpeed;
+        // Calculate the difference between the target velocity and current velocity.
+        float velocityChange = targetVelocity - currentSpeed;
 
-            // Apply acceleration and deceleration.
-            float accelerationAmount = moveX != 0f ? acceleration : deceleration;
-            float change = accelerationAmount * Time.deltaTime;
+        // Apply acceleration and deceleration.
+        float accelerationAmount = moveX != 0f ? acceleration : deceleration;
+        float change = accelerationAmount * Time.deltaTime;
 
-            if (Mathf.Abs(velocityChange) > change)
-            {
-                velocityChange = Mathf.Sign(velocityChange) * change;
-            }
+        if (Mathf.Abs(velocityChange) > change)
+        {
+            velocityChange = Mathf.Sign(velocityChange) * change;
+        }
 
-            // Update the current speed.
-            currentSpeed += velocityChange;
+        // Update the current speed.
+        currentSpeed += velocityChange;
 
-            // Apply movement to the Rigidbody2D.
-            Vector2 movement = new Vector2(currentSpeed, rb.velocity.y);
-            rb.velocity = movement;
+        // Apply movement to the Rigidbody2D.
+        Vector2 movement = new Vector2(currentSpeed, rb.velocity.y);
+        rb.velocity = movement;
 
-            
 
-            if (!isFacingRight && movement.x < 0f)
-            {
-                Flip();
-            }
-            else if (isFacingRight && movement.x > 0f)
-            {
-                Flip();
-            }
-        
-            
+
+        if (!isFacingRight && movement.x < 0f)
+        {
+            Flip();
+        }
+        else if (isFacingRight && movement.x > 0f)
+        {
+            Flip();
+        }
+
+
 
     }
 
     private void FreezeZAxix()
     {
-            playerTransform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, 0);   
+        playerTransform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, 0);
     }
 
     private void Flip()
@@ -213,23 +225,23 @@ public class PlayerMovController : MonoBehaviour
 
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
-            
+
         }
 
         if (UserInput.instance.controls.Player.Jump.IsPressed())
         {
             groundChecker.isCoyote = false;
-            
+
             if (jumpTimeCounter > 0 && isJumping)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 jumpTimeCounter -= Time.deltaTime;
-                
+
             }
             else
             {
                 isJumping = false;
-                
+
             }
 
         }
@@ -250,7 +262,7 @@ public class PlayerMovController : MonoBehaviour
 
             if (moveDown == -1)
             {
-                
+
 
                 isJumping = false;
 
@@ -258,7 +270,7 @@ public class PlayerMovController : MonoBehaviour
 
                 rb.AddForce(descendVector, ForceMode.Impulse);
 
-                
+
 
             }
 
@@ -277,7 +289,7 @@ public class PlayerMovController : MonoBehaviour
         //check if the player is grounded for the movement animation
         if (isGrounded)
         {
-            
+
             animator.SetFloat("Speed", Mathf.Abs(movementSpeed));
         }
 
@@ -287,7 +299,7 @@ public class PlayerMovController : MonoBehaviour
 
             animator.SetBool("isJumping", true);
 
-            
+
         }
         else
         {
@@ -316,6 +328,7 @@ public class PlayerMovController : MonoBehaviour
 
     IEnumerator DoDash(float direction)
     {
+        Physics.IgnoreLayerCollision(3, 7);
         canMove = false;
         canJump = false;
         canUseGravity = false;
@@ -328,7 +341,7 @@ public class PlayerMovController : MonoBehaviour
         dashUI.localScale = new Vector3(0, 1, 1);
         dashUIBackground.DOScale(new Vector3(0, 1, 1), dashTime).SetEase(Ease.Linear);
 
-        yield return new WaitForSecondsRealtime(dashTime); 
+        yield return new WaitForSecondsRealtime(dashTime);
 
         rb.velocity = Vector3.zero;
 
@@ -337,15 +350,32 @@ public class PlayerMovController : MonoBehaviour
         canMove = true;
         canUseGravity = true;
         isDashing = false;
+        Physics.IgnoreLayerCollision(3, 7, false);
         StartCoroutine(DashCooldown());
     }
 
     IEnumerator DashCooldown()
     {
+
+
         dashUIBackground.DOScale(new Vector3(1, 1, 1), dashCooldown).SetEase(Ease.Linear);
         dashUI.DOScale(new Vector3(1, 1, 1), dashCooldown).SetEase(Ease.Linear);
         yield return new WaitForSecondsRealtime(dashCooldown);
+        SpawnVFX();
         canDash = true;
+    }
+    void SpawnVFX()
+    {
+        ParticleSystem vfx = Instantiate(implosion);
+        ParticleSystem vfx2 = Instantiate(implosion2);
+        vfx.transform.position = transform.position;
+        vfx.transform.parent = transform;
+        vfx2.transform.parent = transform;
+        vfx.Play();
+        vfx2.transform.position = transform.position;
+        vfx2.Play();
+        Destroy(vfx.gameObject, vfxTimeUntilDie);
+        Destroy(vfx2.gameObject, vfxTimeUntilDie);
     }
 
     #region Sound
@@ -373,7 +403,7 @@ public class PlayerMovController : MonoBehaviour
     {
         dashAudioSource.PlayOneShot(dashAudioClip);
     }
-    
+
 
     #endregion
 }

@@ -16,6 +16,7 @@ public class NormalEnemyLogicManager : LogicMachineManager
     public PlayerHealth playerHealth;
     public NormalEnemyHealth enemyHealth;
     public Animator animator;
+    public NormalEnemyAttackNew enemyAttack;
 
     [Header("Values")]
     public float minWaitTime;
@@ -32,7 +33,7 @@ public class NormalEnemyLogicManager : LogicMachineManager
     [Header("Attack Timing Values")]
     public float timeUntilAttackHits;
     public float animationTime;
-    public float afterAttack;
+    public float cooldownBonus;
 
     [Header("Animation Clip")]
 
@@ -58,7 +59,7 @@ public class NormalEnemyLogicManager : LogicMachineManager
     void Start()
     {
         animationTime = attackAnimation.length;
-        afterAttack = attackAnimation.length - animationTime;
+        
     }
 
     // Update is called once per frame

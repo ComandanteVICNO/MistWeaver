@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.UI;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -19,17 +20,15 @@ public class PlayerAttack : MonoBehaviour
     [Header("Player Damage & Range")]
     public float attackRange = 0.5f;
     public float playerDamage;
-    public float maxEnergy;
-    public float currentEnergy;
+    public int maxEnergy;
+    public int currentEnergy;
     public float playerStunningDamage;
     public float playerDamageFinal;
     public float knockBackAmount;
 
     [Header("Attack and Animation Cooldown")]
     public float attackCooldown;
-    public float attackChainBreakSpeed;
-    public float timeUntilNormalAttack;
-    public float timeUntilStunnedAttack;
+    public float attackCooldownBonus;
 
     [Header("Attack Checks")]
     public bool isAttacking = false;
@@ -46,12 +45,12 @@ public class PlayerAttack : MonoBehaviour
     public float stunAttackAnimationTime;
 
     [Header("Energia UI")]
-    public RectTransform playerEnergyBar;
-    public RectTransform playerEnergyBackgroundBar;
-    public float barBackgroundWaitTime;
-    public float barBackgroundAnimationTime;
-    float currentBarValue;
+    public Image stunCharge1;
+    public Image stunCharge2;
+    public Image stunCharge3;
 
+    public Color32 originalColor;
+    public Color32 depletedColor;
 
     public Coroutine normalAttackCoroutine;
     public Coroutine stunAttackCoroutine;
@@ -70,6 +69,9 @@ public class PlayerAttack : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         normalAttackAnimationTime = normalAttackAnimation.length;
         stunAttackAnimationTime = stunAttackAnimation.length;
+
+        originalColor = stunCharge1.color;
+        depletedColor = new Color32(50, 50, 50, 255);
         
     }
 
@@ -91,51 +93,55 @@ public class PlayerAttack : MonoBehaviour
         if(UserInput.instance.controls.Player.StunAttack.WasPerformedThisFrame() && movController.isGrounded && canAttack)
         {
             if (!isAttackAllow) return;
-            float energyNeed = 30;
-            if (currentEnergy < energyNeed) return;
+            
+            if (currentEnergy == 0) return;
             else
             {
                 if (stunAttackCoroutine == null && !isAttacking)
                 {
                     stunAttackCoroutine = StartCoroutine(DoStunAttack());
-                    currentEnergy -= energyNeed;
-                    StartCoroutine(UpdateEnergyUI());
+                    currentEnergy -= 1;
+                    
                 }
             }
         }
+
+        UpdateEnergyUI();
     }
 
 
     public IEnumerator DoMainAttack()
     {
-        float remainingAnimationTime = normalAttackAnimationTime - timeUntilNormalAttack;
+        float attackCooldown = normalAttackAnimationTime + attackCooldownBonus;
         rb.velocity = Vector3.zero;
         animator.SetBool("NormalAttack", true);
         isAttacking = true;
         movController.canJump = false;
         movController.canDash = false;
         movController.canMove = false;
-        
-        yield return new WaitForSeconds(timeUntilNormalAttack);
+
+
         MainAttack();
-        attack += 1;
-        Debug.Log("attacking" + attack);
+     
 
-        yield return new WaitForSeconds(remainingAnimationTime);
+        yield return new WaitForSeconds(normalAttackAnimationTime);
 
+        animator.SetBool("NormalAttack", false);
+
+        yield return new WaitForSeconds(attackCooldownBonus);
+        
         isAttacking = false;
 
         movController.canJump = true;
         movController.canDash = true;
         movController.canMove = true;
 
-        animator.SetBool("NormalAttack", false);
         normalAttackCoroutine = null;
     }
 
     public IEnumerator DoStunAttack()
     {
-        float remainingAnimationTime = stunAttackAnimationTime - timeUntilStunnedAttack;
+        float attackCooldown = stunAttackAnimationTime + attackCooldownBonus;
         rb.velocity = Vector3.zero;
         animator.SetBool("StunAttack", true);
         isAttacking = true;
@@ -143,19 +149,21 @@ public class PlayerAttack : MonoBehaviour
         movController.canJump = false;
         movController.canDash = false;
         movController.canMove = false;
-        yield return new WaitForSecondsRealtime(timeUntilStunnedAttack);
+        
 
         StunnedAttack();
 
-        yield return new WaitForSeconds(remainingAnimationTime);
+        yield return new WaitForSeconds(stunAttackAnimationTime);
 
+        animator.SetBool("StunAttack", false);
+
+        yield return new WaitForSeconds(attackCooldownBonus);
         isAttacking = false;
 
         movController.canJump = true;
         movController.canDash = true;
         movController.canMove = true;
 
-        animator.SetBool("StunAttack", false);
         stunAttackCoroutine = null;
     }
 
@@ -214,21 +222,40 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    IEnumerator UpdateEnergyUI()
+    public void UpdateEnergyUI()
     {
-        currentBarValue = (currentEnergy * 1) / maxEnergy;
+        switch (currentEnergy)
+        {
+            case 0:
+                stunCharge1.color = depletedColor;
+                stunCharge2.color = depletedColor;
+                stunCharge3.color = depletedColor;
+                break;
 
-        playerEnergyBar.localScale = new Vector3(currentBarValue, 1, 1);
+            case 1:
+                stunCharge1.color = originalColor;
+                stunCharge2.color = depletedColor;
+                stunCharge3.color = depletedColor;
+                break;
 
-        yield return new WaitForSecondsRealtime(barBackgroundWaitTime);
-
-        playerEnergyBackgroundBar.DOScale(new Vector3(currentBarValue, 1, 1), barBackgroundAnimationTime).SetEase(Ease.Linear);
+            case 2:
+                stunCharge1.color = originalColor;
+                stunCharge2.color = originalColor;
+                stunCharge3.color = depletedColor;
+                break;
+            
+            case 3:
+                stunCharge1.color = originalColor;
+                stunCharge2.color = originalColor;
+                stunCharge3.color = originalColor;
+                break;
+        }
+            
     }
 
-    public void EnergyPickup(float energy)
+    public void EnergyPickup()
     {
-        currentEnergy += energy;
-        StartCoroutine(UpdateEnergyUI());
+        currentEnergy += 1;
 
         if(currentEnergy > maxEnergy)
         {

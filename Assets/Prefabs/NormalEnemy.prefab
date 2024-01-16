@@ -1,5 +1,55 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &50197250408834095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2162634107444801332}
+  - component: {fileID: 5990756650533879944}
+  m_Layer: 7
+  m_Name: AttackHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2162634107444801332
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50197250408834095}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7821845974273210450}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5990756650533879944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50197250408834095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e00f38f6c09d1f4e84498f8e2983d92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealth: {fileID: 0}
+  manager: {fileID: 8296539868116338352}
+  attackCooldown: 2
+  attackCooldownBonus: 1
+  attackClip: {fileID: 7400000, guid: cf49a206dd532b549b73b7915ec33f70, type: 2}
+  spriteAnimator: {fileID: 522951895204301312}
 --- !u!1 &137933609485802725
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,6 +92,7 @@ Transform:
   - {fileID: 4371332314910619930}
   - {fileID: 777495974193901715}
   - {fileID: 4414482294589331009}
+  - {fileID: 2162634107444801332}
   m_Father: {fileID: 4969580580402544054}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1273134046117505103
@@ -52,7 +103,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137933609485802725}
   serializedVersion: 4
-  m_Mass: 70
+  m_Mass: 200
   m_Drag: 10
   m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -136,8 +187,9 @@ MonoBehaviour:
   chaseHitbox: {fileID: 858530544194306961}
   attackHitbox: {fileID: 3875400093352964826}
   playerHealth: {fileID: 0}
-  enemyHealth: {fileID: 0}
+  enemyHealth: {fileID: 3015439454802144754}
   animator: {fileID: 522951895204301312}
+  enemyAttack: {fileID: 5990756650533879944}
   minWaitTime: 1
   maxWaitTime: 3
   patrolSpeed: 2
@@ -148,9 +200,9 @@ MonoBehaviour:
   timeStunned: 3
   timeknockback: 0.2
   knockbackForce: 1000
-  timeUntilAttackHits: 0.83
+  timeUntilAttackHits: 0.13
   animationTime: 0
-  afterAttack: 0
+  cooldownBonus: 1
   attackAnimation: {fileID: 7400000, guid: cf49a206dd532b549b73b7915ec33f70, type: 2}
   footstepAudioSource: {fileID: 7227313496842785641}
   audioSteps:
@@ -215,8 +267,8 @@ MonoBehaviour:
   energyPickup: {fileID: 4570881955219675289, guid: f4865d6988cb6c24e890d8a1d293aef2,
     type: 3}
   launchForce: 10
-  healthSpawnChance: 40
-  energySpawnChance: 20
+  healthSpawnChance: 50
+  energySpawnChance: 40
   chosenEnergy: Energy
   chosenHealth: Health
 --- !u!1 &823531321675600937
