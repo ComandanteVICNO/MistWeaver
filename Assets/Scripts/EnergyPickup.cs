@@ -7,6 +7,12 @@ public class EnergyPickup : MonoBehaviour
     Transform energyPickupTransform;
     public PlayerAttack playerAttack;
     public GameObject energyPickup;
+
+    public GameObject parent;
+
+    public AudioSource audioSource;
+    public AudioClip energyPickupSound;
+
     void Start()
     {
         energyPickupTransform = GetComponent<Transform>();
@@ -26,7 +32,19 @@ public class EnergyPickup : MonoBehaviour
             playerAttack = other.GetComponent<PlayerAttack>();
             playerAttack.EnergyPickup();
 
-            Destroy(energyPickup);
+            audioSource.PlayOneShot(energyPickupSound);
+
+            StartCoroutine(StartDestroy());
         }
     }
+
+    IEnumerator StartDestroy()
+    {
+        Destroy(energyPickup);
+
+        yield return new WaitForSecondsRealtime(energyPickupSound.length);
+
+        Destroy(parent);
+    }
+
 }

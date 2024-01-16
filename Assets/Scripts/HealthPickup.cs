@@ -8,6 +8,13 @@ public class HealthPickup : MonoBehaviour
     public float healthAmount;
     public PlayerHealth playerHealth;
     public GameObject healthPickup;
+
+    public GameObject parent;
+
+    public AudioSource audioSource;
+    public AudioClip healthPickupSound;
+   
+
     void Start()
     {
         healthPickupTransform = GetComponent<Transform>();
@@ -27,7 +34,19 @@ public class HealthPickup : MonoBehaviour
             playerHealth = other.GetComponent<PlayerHealth>();
             playerHealth.HealthPickup(healthAmount);
 
-            Destroy(healthPickup);
+            audioSource.PlayOneShot(healthPickupSound);
+
+            StartCoroutine(StartDestroy());
         }
     }
+
+    IEnumerator StartDestroy()
+    {
+        Destroy(healthPickup);
+
+        yield return new WaitForSecondsRealtime(healthPickupSound.length);
+
+        Destroy(parent);
+    }
+
 }
