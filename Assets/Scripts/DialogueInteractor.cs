@@ -16,12 +16,13 @@ public class DialogueInteractor : MonoBehaviour
     public DialogueWriter writer;
 
     public GameObject screenLight;
-
+    public GameObject[] spotLights;
 
     [Header("Tween Animation")]
     public GameObject screen;
     public GameObject screenHide;
-
+    public Light screenLightSource;
+    public float screenLightIntensity;
     public Transform originalTransform;
     public Transform hidingTransform;
 
@@ -48,7 +49,7 @@ public class DialogueInteractor : MonoBehaviour
     }
     private void Start()
     {
-        
+        screenLightIntensity = screenLightSource.intensity;
         HideHint();
 
     }
@@ -105,8 +106,9 @@ public class DialogueInteractor : MonoBehaviour
         screen.transform.DOScaleX(0.1f, animationSpeed).SetEase(InEase);
         screen.transform.DOScaleY(0.1f, animationSpeed).SetEase(InEase);
         screen.transform.DOScaleZ(0.061f, animationSpeed) .SetEase(InEase);
+        //screenLight.SetActive(true);
 
-        screenLight.SetActive(true);
+        screenLightSource.DOIntensity(screenLightIntensity, animationSpeed).SetEase(InEase);
     }
 
     void HideHint()
@@ -115,7 +117,8 @@ public class DialogueInteractor : MonoBehaviour
         screen.transform.DOScaleX(0f, animationSpeed).SetEase(OutEase);
         screen.transform.DOScaleY(0f, animationSpeed).SetEase(OutEase);
         screen.transform.DOScaleZ(0f, animationSpeed).SetEase(OutEase);
-        screenLight.SetActive(false);
+        screenLightSource.DOIntensity(0f, animationSpeed).SetEase(OutEase);
+        //screenLight.SetActive(false);
     }
 
     
@@ -146,7 +149,16 @@ public class DialogueInteractor : MonoBehaviour
         currentIndex = 0;
         DialogueWriter.instance.HideDialogue();
         HideHint();
+        HideLights();
         playerInZone = false;
         CamManager.current.UnfocusCamera();
+    }
+
+    void HideLights()
+    {
+        foreach(GameObject spotLight in spotLights)
+        {
+            spotLight.SetActive(false);
+        }
     }
 }
