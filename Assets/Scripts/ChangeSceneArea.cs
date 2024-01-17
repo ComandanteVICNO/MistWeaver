@@ -14,6 +14,8 @@ public class ChangeSceneArea : MonoBehaviour
     public float waitTime;
     private PlayerMovController movController;
 
+    public float speed;
+
     public Image transitionImage;
 
     public GameObject player;
@@ -26,17 +28,21 @@ public class ChangeSceneArea : MonoBehaviour
     public float colorFadeTime;
     public float timeWhileFaded;
 
+    bool playerInTheArea = false;
+    public Animator animator;
 
-
-
+    private void Start()
+    {
+        animator.SetBool("isWalking", false);
+    }
     // Update is called once per frame
     void Update()
     {
         movController = FindAnyObjectByType<PlayerMovController>();
         playerTrasform = movController.transform;
         rb = movController.rb;
-        
-        
+
+        MovePlayer();
     }
 
     public void CancelMovement()
@@ -73,8 +79,9 @@ public class ChangeSceneArea : MonoBehaviour
     IEnumerator StartTransition()
     {
         CancelMovement();
-
-        
+        CamManager.current.FocusOnTransitionCam();
+        playerInTheArea = true;
+        animator.SetBool("isWalking", true);
         transitionImage.DOColor(blackColor, colorFadeTime).SetEase(Ease.Linear);
         
 
@@ -84,6 +91,15 @@ public class ChangeSceneArea : MonoBehaviour
 
         
 
+    }
+
+    void MovePlayer()
+    {
+        if (playerInTheArea)
+        {
+            Vector3 movement = Vector3.right * speed;
+            rb.AddForce(movement);
+        }
     }
 
 }

@@ -34,7 +34,7 @@ public class DeathHandler : MonoBehaviour
     [Header("UI Stuff")]
     public GameObject healthUI;
     public GameObject energyUI;
-    public GameObject dashUI;
+    
     public GameObject deathUI;
     public TMP_Text title1;
     public TMP_Text title2;
@@ -114,7 +114,7 @@ public class DeathHandler : MonoBehaviour
         {
             healthUI.SetActive(false);
             energyUI.SetActive(false);
-            dashUI.SetActive(false);
+            
             deathUI.SetActive(true);
 
             title1.DOFade(0f, 0.01f);
@@ -251,7 +251,7 @@ public class DeathHandler : MonoBehaviour
 
         healthUI.SetActive(true);
         energyUI.SetActive(true);
-        dashUI.SetActive(true);
+        
         deathUI.SetActive(false);
     }
 

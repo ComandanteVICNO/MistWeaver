@@ -51,7 +51,7 @@ MonoBehaviour:
   healthPickup: {fileID: 8997322527473336741}
   parent: {fileID: 4570881955219675289}
   audioSource: {fileID: 7782024185979395743}
-  healthPickupSound: {fileID: 0}
+  healthPickupSound: {fileID: 8300000, guid: 8098b52196322a84097c3acf169242df, type: 3}
 --- !u!136 &4780506131518630070
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -223,7 +223,8 @@ AudioSource:
   m_GameObject: {fileID: 8854468204085170260}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4043878213034024787, guid: 5775ecd3d3aec3543a5de821175ba01c,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

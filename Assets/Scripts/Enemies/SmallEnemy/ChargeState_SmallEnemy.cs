@@ -4,9 +4,15 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class ChargeState_SmallEnemy : LogicMachineBehaviour<SmallEnemyLogicManager>
 {
+    [Header("VFX")]
+    
+    
+    VisualEffect vfx;
+
     float originalCharge;
     float currentCharge;
     bool canCharge;
@@ -19,6 +25,7 @@ public class ChargeState_SmallEnemy : LogicMachineBehaviour<SmallEnemyLogicManag
 
     public override void OnEnter()
     {
+        SpawnVFX();
         logicAnimator.SetBool("canLunge", false);
         manager.spriteAnimator.SetBool("isCharging", true);
         canCharge = true;
@@ -59,8 +66,14 @@ public class ChargeState_SmallEnemy : LogicMachineBehaviour<SmallEnemyLogicManag
 
     async void ChargeLunge()
     {
-
+        bool wasParticlesAtivated = false;
         var time = manager.lungeChargeTime;
+        if (!wasParticlesAtivated)
+        {
+            
+            wasParticlesAtivated = true;
+        }
+
         try
         {
             await Task.Delay(TimeSpan.FromSeconds(time), cancellationTokenSource.Token);
@@ -73,9 +86,16 @@ public class ChargeState_SmallEnemy : LogicMachineBehaviour<SmallEnemyLogicManag
         if (!active) return;
 
         logicAnimator.SetBool("canLunge", true);
-        
+        wasParticlesAtivated = false;
 
 
+    }
+    void SpawnVFX()
+    {
+        vfx = Instantiate(manager.warnAttack);
+        vfx.transform.position = transform.position;
+        vfx.Play();
+        Destroy(vfx.gameObject, manager.vfxTimeUntilDie);
     }
 
 }

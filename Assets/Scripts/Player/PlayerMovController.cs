@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.VFX;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerMovController : MonoBehaviour
 {
@@ -56,8 +55,8 @@ public class PlayerMovController : MonoBehaviour
     Coroutine dashSoundCoroutine;
     public AudioSource dashAudioSource;
     public AudioClip dashAudioClip;
-    public RectTransform dashUI;
-    public RectTransform dashUIBackground;
+    public AudioClip dashRechargeClip;
+    
 
     [Header("Collision Layers")]
     public LayerMask playerLayer;
@@ -338,9 +337,7 @@ public class PlayerMovController : MonoBehaviour
 
         rb.velocity = new Vector2(dashForce * direction, 0f);
 
-        dashUI.localScale = new Vector3(0, 1, 1);
-        dashUIBackground.DOScale(new Vector3(0, 1, 1), dashTime).SetEase(Ease.Linear);
-
+        
         yield return new WaitForSecondsRealtime(dashTime);
 
         rb.velocity = Vector3.zero;
@@ -358,11 +355,11 @@ public class PlayerMovController : MonoBehaviour
     {
 
 
-        dashUIBackground.DOScale(new Vector3(1, 1, 1), dashCooldown).SetEase(Ease.Linear);
-        dashUI.DOScale(new Vector3(1, 1, 1), dashCooldown).SetEase(Ease.Linear);
+        
         yield return new WaitForSecondsRealtime(dashCooldown);
         SpawnVFX();
         canDash = true;
+        dashAudioSource.PlayOneShot(dashRechargeClip);
     }
     void SpawnVFX()
     {

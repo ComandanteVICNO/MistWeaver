@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class SmallEnemyLogicManager : LogicMachineManager
 {
@@ -30,6 +31,7 @@ public class SmallEnemyLogicManager : LogicMachineManager
 
     [Header("Charge Values")]
     public float lungeChargeTime;
+    
 
     [Header("Lunge Values")]
     public float lungeForce;
@@ -49,11 +51,16 @@ public class SmallEnemyLogicManager : LogicMachineManager
     [Header("Sprite Animator")]
     public Animator spriteAnimator;
 
+    [Header("VFX")]
+    public VisualEffect warnAttack;
+    public float vfxTimeUntilDie;
+    VisualEffect vfx;
 
     public override void OnAwake()
     {
         enemyHealth = GetComponent<SmallEnemyHealth>();
         playerHealth = FindAnyObjectByType<PlayerHealth>();
+        
         playerTransform = playerHealth.transform;
         
     }

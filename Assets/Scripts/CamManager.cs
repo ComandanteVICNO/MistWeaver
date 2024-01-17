@@ -9,6 +9,7 @@ public class CamManager : MonoBehaviour
 
     public CinemachineVirtualCamera focusCamera;
     public CinemachineVirtualCamera deathCamera;
+    public CinemachineVirtualCamera transitionCam;
 
     private void Awake()
     {
@@ -41,4 +42,15 @@ public class CamManager : MonoBehaviour
     {
         deathCamera.Priority = 9;
     }
+
+    public void FocusOnTransitionCam()
+    {
+        transitionCam.Priority = 13;
+    }
+
+    public void UnfocusOnTransitionCam()
+    {
+        transitionCam.Priority = 9;
+    }
+
 }

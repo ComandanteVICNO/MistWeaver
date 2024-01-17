@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 18.407959, y: -77}
+  m_AnchoredPosition: {x: 17, y: -141}
   m_SizeDelta: {x: -524.9802, y: 179.9555}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &127998253
@@ -182,8 +182,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "When people fall into danger, they are then able to strive for victory\u201D"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9f01a0327f7c6574ead52e97fa34f591, type: 2}
-  m_sharedMaterial: {fileID: -1962400437662345663, guid: 9f01a0327f7c6574ead52e97fa34f591,
+  m_fontAsset: {fileID: 11400000, guid: 6b2a40d470948f1419bd20b7405e1fd9, type: 2}
+  m_sharedMaterial: {fileID: -4836366075865339353, guid: 6b2a40d470948f1419bd20b7405e1fd9,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -208,7 +208,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 70.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1057,7 +1057,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 18.407959, y: 347}
+  m_AnchoredPosition: {x: 17, y: 282.99997}
   m_SizeDelta: {x: -524.9802, y: 179.9555}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1641333316
@@ -1082,8 +1082,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u201CConfront them with annihilation, and they will survive..."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9f01a0327f7c6574ead52e97fa34f591, type: 2}
-  m_sharedMaterial: {fileID: -1962400437662345663, guid: 9f01a0327f7c6574ead52e97fa34f591,
+  m_fontAsset: {fileID: 11400000, guid: 6b2a40d470948f1419bd20b7405e1fd9, type: 2}
+  m_sharedMaterial: {fileID: -4836366075865339353, guid: 6b2a40d470948f1419bd20b7405e1fd9,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1316,7 +1316,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 574.99, y: -215.81}
+  m_AnchoredPosition: {x: 573.58203, y: -279.81}
   m_SizeDelta: {x: -1638.1499, y: 97.6589}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1845388410
@@ -1341,8 +1341,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '- Sun Tzu'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9f01a0327f7c6574ead52e97fa34f591, type: 2}
-  m_sharedMaterial: {fileID: -1962400437662345663, guid: 9f01a0327f7c6574ead52e97fa34f591,
+  m_fontAsset: {fileID: 11400000, guid: 6b2a40d470948f1419bd20b7405e1fd9, type: 2}
+  m_sharedMaterial: {fileID: -4836366075865339353, guid: 6b2a40d470948f1419bd20b7405e1fd9,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1367,7 +1367,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 49.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1451,7 +1451,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 18.407959, y: 137}
+  m_AnchoredPosition: {x: 17, y: 72.999985}
   m_SizeDelta: {x: -524.9802, y: 179.9555}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2048545213
@@ -1476,8 +1476,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Plunge them into a deadly situation, and they will then live...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9f01a0327f7c6574ead52e97fa34f591, type: 2}
-  m_sharedMaterial: {fileID: -1962400437662345663, guid: 9f01a0327f7c6574ead52e97fa34f591,
+  m_fontAsset: {fileID: 11400000, guid: 6b2a40d470948f1419bd20b7405e1fd9, type: 2}
+  m_sharedMaterial: {fileID: -4836366075865339353, guid: 6b2a40d470948f1419bd20b7405e1fd9,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1502,7 +1502,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 71
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1748,8 +1748,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Or they will die trying... '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9f01a0327f7c6574ead52e97fa34f591, type: 2}
-  m_sharedMaterial: {fileID: -1962400437662345663, guid: 9f01a0327f7c6574ead52e97fa34f591,
+  m_fontAsset: {fileID: 11400000, guid: 6b2a40d470948f1419bd20b7405e1fd9, type: 2}
+  m_sharedMaterial: {fileID: -4836366075865339353, guid: 6b2a40d470948f1419bd20b7405e1fd9,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

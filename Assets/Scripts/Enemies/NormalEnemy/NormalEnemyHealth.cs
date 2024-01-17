@@ -41,7 +41,7 @@ public class NormalEnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
         originalColor = enemySprite.color;
         damageColor = Color.red;
-        stunnedColor = Color.black;
+        stunnedColor = new Color32(153, 153, 255, 255);
         wasAttacked = false;
     }
 
@@ -82,7 +82,7 @@ public class NormalEnemyHealth : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ChangeColor(stunnedColor));
+            StartCoroutine(ChangeStunnedColor(stunnedColor));
             audioSource.PlayOneShot(hurtSound);
             SpawnVFX();
         }
@@ -113,6 +113,16 @@ public class NormalEnemyHealth : MonoBehaviour
         enemySprite.color = Color;
 
         yield return new WaitForSeconds(colorChangeDuration);
+
+        enemySprite.color = originalColor;
+
+    }
+
+    IEnumerator ChangeStunnedColor(Color32 Color)
+    {
+        enemySprite.color = Color;
+
+        yield return new WaitForSeconds(3);
 
         enemySprite.color = originalColor;
 

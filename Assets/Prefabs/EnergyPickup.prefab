@@ -73,7 +73,7 @@ MonoBehaviour:
   energyPickup: {fileID: 8997322527473336741}
   parent: {fileID: 4570881955219675289}
   audioSource: {fileID: 9013991543269469497}
-  energyPickupSound: {fileID: 0}
+  energyPickupSound: {fileID: 8300000, guid: 8098b52196322a84097c3acf169242df, type: 3}
 --- !u!1 &4570881955219675289
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +222,8 @@ AudioSource:
   m_GameObject: {fileID: 5266129867951682939}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4043878213034024787, guid: 5775ecd3d3aec3543a5de821175ba01c,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
